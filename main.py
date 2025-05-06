@@ -65,9 +65,14 @@ def main():
             initial_date = input("Enter initial date (YYYY-MM-DD): ")
             final_date = input("Enter final date (YYYY-MM-DD): ")
             order = input("Enter order (ASC or DESC, default ASC): ") or "ASC"
+            page = int(input("Enter page number (default 1): ") or 1)
             occurrence_api = OccurrenceAPI(token_file=TOKEN_FILE, verify_ssl=False)
-            occurrence_api.get_occurrences(initial_date, final_date, city_id, id_state=state_id if state_id else None, order=order)
-            print(f"Occurrences data saved to data/occurrences_{initial_date}_{final_date}_state_{state_id}_city_{city_id}.json")
+            occurrence_api.get_occurrences(
+                initial_date, final_date, city_id,
+                id_state=state_id if state_id else None,
+                order=order, page=page
+            )
+            print(f"Occurrences data saved to data/occurrences_{initial_date}_{final_date}_state_{state_id}_city_{city_id}_page_{page}.json")
         case "5":
             state_id = input("Enter the state id: ")
             initial_date = input("Enter initial date (YYYY-MM-DD): ")

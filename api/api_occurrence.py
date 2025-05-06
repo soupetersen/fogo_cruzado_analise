@@ -16,16 +16,17 @@ class OccurrenceAPI:
         except FileNotFoundError:
             raise Exception("Token file not found.")
 
-    def get_occurrences(self, initial_date, final_date, id_cities, id_state=None, order="ASC", save_json=True):
+    def get_occurrences(self, initial_date, final_date, id_cities, id_state=None, order="ASC", page=1, take=2000, save_json=True):
         headers = {"Authorization": f"Bearer {self.access_token}"}
         params = {
+            "page": page,
+            "take": take,
             "initialdate": initial_date,
             "finaldate": final_date,
             "idCities": id_cities,
-            "order": order.upper() if order else "ASC"
+            "order": order.upper() if order else "ASC",
         }
-        # Remove empty or None parameters
-        params = {k: v for k, v in params.items() if v}
+        params = {k: v for k, v in params.items() if v is not None and v != ''}
         if id_state:
             params["idState"] = id_state
         response = requests.get(self.base_url, headers=headers, params=params, verify=self.verify_ssl)
@@ -35,7 +36,7 @@ class OccurrenceAPI:
             os.makedirs("data", exist_ok=True)
             file_path = os.path.join(
                 "data",
-                f"occurrences_city_{id_cities}.json"
+                f"occurrences_{initial_date}_{final_date}_city_{id_cities}_page_{page}.json"
             )
             with open(file_path, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)

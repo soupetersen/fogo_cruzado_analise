@@ -1,0 +1,15 @@
+{
+  "msg": "Successfully returned cities",
+  "msgCode": "success",
+  "code": 200,
+  "data": [
+    {
+      "id": "8f3a026f-2fc4-419c-9918-f0684a2abbec",
+      "name": "SALVADOR",
+      "state": {
+        "id": "d3a9b545-7056-4dc6-9b68-ce320c9edffc",
+        "name": "Bahia"
+      }
+    }
+  ]
+}
